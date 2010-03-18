@@ -47,6 +47,7 @@ public class JSONOperation extends BaseOperation {
 		}
 
 		public Object resolve(JSON object, String path) {
+			if (path == null || path.equals("")) return object;
 			int index = path.lastIndexOf(pathSeparator);
 			Object value = get(object, path);
 			if (value == null && index > 0) {
