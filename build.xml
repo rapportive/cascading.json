@@ -66,6 +66,7 @@
 			<classpath refid="project.class.path"/>
 		</javac>
 
+		<mkdir dir="${jars.dir}" />
 		<jar jarfile="${jars.dir}/${ant.project.name}-${cascading.json.release.version}.jar">
 			<fileset dir="${build.classes}"/>
 		</jar>
