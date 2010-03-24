@@ -53,18 +53,25 @@ public class JSONOperation extends BaseOperation {
 			if (value == null && index > 0) {
 				String subpath = path.substring(0, index);
 				String key = path.substring(index + 1);
-				Object subValue = resolve(object, subpath);
-				if (subValue instanceof JSONObject) {
-					return ((JSONObject) subValue).get(key);
-				}
+				value = get(resolve(object, subpath), key);
 			}
 			return value;
 		}
 
-		private Object get(JSON json, String key) {
+		private Object get(Object json, String key) {
 			if (json instanceof JSONObject) {
-				return ((JSONObject) json).get(key);
+				JSONObject obj = (JSONObject) json;
+				if (obj.containsKey(key)) return obj.get(key);
 			}
+
+			if (json instanceof JSONArray) {
+				JSONArray arr = (JSONArray) json;
+				try {
+					int index = Integer.parseInt(key);
+					if (index >= 0 && index < arr.size()) return arr.get(index);
+				} catch (NumberFormatException e) {}
+			}
+
 			return null;
 		}
 	}
