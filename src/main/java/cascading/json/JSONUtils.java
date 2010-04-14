@@ -15,6 +15,7 @@ public class JSONUtils {
 	
 	/**
 	 * Returns a JSON object from the specified source.
+	 * If <i>source</i> is a JSONObject, then it is returned unmolested.
 	 * If <i>source</i> is a string, then the string is parsed, and the resulting
 	 * JSON object is returned.
 	 * If <i>source</i> is a JSONWritable, then the underlying JSONObject is returned.
@@ -22,6 +23,8 @@ public class JSONUtils {
 	public static JSON getJSON(Object source) {
 		if (source instanceof String) {
 			return JSONObject.fromObject((String) source);
+		} else if (source instanceof JSONObject) {
+			return (JSONObject) source;
 		} else if (source instanceof JSONWritable) {
 			return ((JSONWritable) source).get();
 		} else {
