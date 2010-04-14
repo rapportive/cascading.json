@@ -3,11 +3,14 @@
  */
 package cascading.json.operation;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import cascading.flow.FlowProcess;
 import cascading.operation.Filter;
 import cascading.operation.FilterCall;
 import cascading.tuple.Fields;
+
+import cascading.json.JSONUtils;
 
 /**
  * A filter class that works on JSON objects to filter tuple that does not
@@ -77,15 +80,10 @@ public class JSONFilter extends JSONOperation implements Filter {
   @Override
   public boolean isRemove(FlowProcess flowProcess, FilterCall filterCall){
     Object input = filterCall.getArguments().get(0);
-    JSONObject jsonObj;
-    if (input instanceof String) {
-      jsonObj = JSONObject.fromObject( input );
-    }
-    else if(input instanceof JSONObject) {
-      jsonObj = (JSONObject) input;
-    } else {
-      throw new RuntimeException("Unexpected object type: "+input.getClass());
-    }
+
+    JSON json = JSONUtils.getJSON(input);
+    JSONObject jsonObj = (JSONObject) json; // yes, might fail
+
     return isRemove( jsonObj );
   }
 
