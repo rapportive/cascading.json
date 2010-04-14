@@ -29,7 +29,7 @@ public class JSONUtils {
 			return ((JSONWritable) source).get();
 		} else {
 			throw new RuntimeException(
-					"The JSON Splitter does not know how to handle an object of type: "
+					"don't know how to get a JSON object from an object of type: "
 							+ source.getClass().getName());
 		}
 	}
